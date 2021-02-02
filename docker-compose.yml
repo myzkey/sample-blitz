@@ -1,0 +1,15 @@
+version: "3.1"
+services:
+  db:
+    image: postgres:13-alpine
+    container_name: blitz-questions-postgres
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: prisma
+      POSTGRES_PASSWORD: prisma
+      POSTGRES_DB: tutorials
+    ports:
+      - "5432:5432"
+volumes:
+  dbdata:

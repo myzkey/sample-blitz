@@ -2,8 +2,9 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = "postgresql://prisma:prisma@localhost:5432/tutorials"
+  // env("DATABASE_URL")
 }
 
 generator client {
@@ -35,4 +36,22 @@ model Session {
   antiCSRFToken      String?
   publicData         String?
   privateData        String?
+}
+
+model Question {
+  id        Int      @default(autoincrement()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  text      String
+  choices   Choice[]
+}
+
+model Choice {
+  id         Int      @default(autoincrement()) @id
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  text       String
+  votes      Int      @default(0)
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId Int
 }
